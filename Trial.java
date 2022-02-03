@@ -9,237 +9,254 @@ import java.lang.*;
 public class Trial {
 
   public static void main(String arg[]) {
+    CircDoublyLL dl=new CircDoublyLL();
+  dl.createDoublyLL(5);
+  System.out.println("Size: "+ dl.size);
+  dl.insertInDoublyLL(2, 77);
+  System.out.println("Size: "+ dl.size);
+  dl.insertInDoublyLL(2, 100);
+  System.out.println("Size: "+ dl.size);
+  dl.insertInDoublyLL(2, 105);
+  System.out.println("Size: "+ dl.size);
+  dl.traverseDLL();
+  dl.searchNode(100);
+  dl.insertInDoublyLL(8, 66);
+  dl.insertInDoublyLL(8, 100);
+  dl.insertInDoublyLL(8, 901);
+  System.out.println("Size: "+ dl.size);
+  dl.insertInDoublyLL(1, 88);
+  System.out.println("Size: "+ dl.size);
+  dl.traverseDLL();
+  System.out.println("----------");
+ // dl.reverseTraversalLL();
+  dl.deleteEntireLL();
+  dl.traverseDLL();
+ //System.out.println("1-"+ head1.previous.value); 
+ //System.out.println("1-"+ head1.value); 
+ //System.out.println("2-"+ head1.next.value); 
+ //System.out.println("3-"+ head1.next.next.value); 
+ //System.out.println("4-"+ head1.next.next.next.value); 
+ //System.out.println("1"+ head1.value); 
+ //System.out.println("1"+ head1.value); 
 
-    LinkedList1 ll = new LinkedList1();
-    // ll.createLinkedList(5);
-    ll.insertNode(1, 12);
-    ll.deleteNode(12);
-    ll.traverseLinkedList();
-    ll.insertNode(2, 15);
-    ll.insertNode(3, 16);
-    ll.insertNode(4, 20);
-    ll.insertNode(20, 25);
-    ll.insertNode(0, 46);
-    ll.insertNode(0, 55);
-    ll.traverseLinkedList();
-    System.out.println("----------------");
-    System.out.println("Size= " + ll.size);
-    ll.searchLinkedList(46);
-    ll.deleteNode(55);
-    ll.traverseLinkedList();
-    ll.deleteNode(25);
-    ll.traverseLinkedList();
-    ll.deleteNodeWithLocation(4);
-    System.out.println("----------------");
-    ll.traverseLinkedList();
-    ll.deleteNodeWithLocation(3);
-    System.out.println("----------------");
-    ll.traverseLinkedList();
-    ll.deleteNodeWithLocation(2);
-    System.out.println("----------------");
-    ll.traverseLinkedList();
-    ll.deleteNodeWithLocation(1);
-    System.out.println("----------------");
-    ll.traverseLinkedList();
-    ll.deleteNodeWithLocation(1);
-    System.out.println("----------------");
-    ll.traverseLinkedList();
+   
+  }
+
+}
+class CircDoublyLL{
+int size;
+NodeD head;
+NodeD tail;
+
+public void deleteEntireLL()
+{
+  if (head==null)
+  {
+    System.out.println("The linked list is already deleted");
+  }
+  else{
+    NodeD tempNode=head;
+    for(int i=1; i<=size; i++)
+    {
+      tempNode.previous=null;
+      tempNode=tempNode.next;
+      
+    }
+    head=null;
+    tail=null;
+
+    System.out.println("Doubly linked list is deleted");
   }
 
 }
 
-class LinkedList1 {
-  public Node head;
-  public Node tail;
-  public int size;
-
-  public void searchLinkedList(int value) {
-    if (head == null) {
-      System.out.println("the linked list is empty could not find any node with value " + value);
-      return;
-    } else {
-      Node temp = head;
-      for (int i = 0; i < size; i++) {
-        if (temp.value == value) {
-          i = i + 1;
-          System.out.println("Node found at position " + i + " with value of " + value);
-          return;
-        }
-        temp = temp.next;
-
-      }
-      System.out.println("The value does not exist in the LinkedList");
-
-    }
-
-  }
-
-  public void deleteNodeWithLocation(int loc) {
-    Node tempNode = head;
-    if (head == null) {
-      System.out.println("The linked list is empty, and cannot be deleted");
-      return;
-    } else if (loc == 1) {
-      if (size == 1) {
-        head = null;
-        tail = head;
-        size--;
-        return;
-      } else {
-        head = head.next;
-        size--;
-        return;
-      }
-
-    } else if (loc >= size) {
-      for (int i = 1; i < size - 1; i++) {
-        tempNode = tempNode.next;
-
-      }
-      tempNode.next = null;
-      tail = tempNode;
-      size--;
-      return;
-
-    } else {
-      for (int i = 1; i < loc - 1; i++) {
-        tempNode = tempNode.next;
-      }
-      tempNode.next = tempNode.next.next;
-      size--;
-      return;
-
-    }
-
-  }
-
-  public void deleteNode(int value) {
-    if (head == null) {
-      System.out.println("There is no node in the LinkeList to be deleted");
-      return;
-    } else {
-      Node temp = head;
-      if (size == 1 && temp.value == value) {
-        head = null;
-        tail = null;
-        size = size - 1;
-        System.out.println("Node with value: " + value + " is succesfully deleted");
-        return;
-
-      } else if (size > 1) {
-        for (int i = 0; i < size; i++) {
-          if (i == 0 && temp.value == value) {
-            head = temp.next;
-            size = size - 1;
-            System.out.println("Node with value: " + value + " is succesfully deleted");
-            return;
-
-          } else if (i >= 0 && temp.next.value == value && temp.next.next != null) {
-            temp.next = temp.next.next;
-            size = size - 1;
-            System.out.println("Node with value: " + value + " is succesfully deleted");
-            return;
-
-          } else if (i > 0 && temp.next.value == value && temp.next.next == null) {
-            temp.next = temp.next.next;
-            tail = temp;
-            size = size - 1;
-            System.out.println("Node with value: " + value + " is succesfully deleted");
-            return;
-          }
-
-          temp = temp.next;
-
-        }
-
-      }
-
-    }
-
-  }
-
-  public void createLinkedList(int value) {
-
-    Node firstNode = new Node(value);
-    // System.out.println(firstNode);
-    firstNode.next = null;
-    head = firstNode;
-    tail = firstNode;
-    size = size + 1;
+public void deleteNode(int loc)
+{
+  if (head==null)
+  {
+    System.out.println("LinkedList is empty no node cannot be deleted");
     return;
   }
-
-  public void traverseLinkedList() {
-    if (head == null) {
-      System.out.print("Linked list is empty: there are no elements in Linked List");
-    } else {
-      Node tempNode;
-      tempNode = head;
-      for (int i = 0; i < size; i++) {
-        System.out.print(tempNode.value);
-        tempNode = tempNode.next;
-
-        if (i < size - 1) {
-          System.out.print(" -> ");
-        }
-
-      }
+  else if(loc<size)
+  {
+    if(loc==1)
+    {
+      head.next.previous=head.previous;
+      head=head.next;
+    // head=head.next;
+    // head.previous=null;
+    size=size-1;
+    }
+    else{
+      NodeD tempNode=head;
+       for(int i=1;i<loc-1;i++)
+       {
+        tempNode=tempNode.next;
+       }
+       tempNode.next=tempNode.next.next;
+       tempNode.next.previous=tempNode;
+       size=size-1;
 
     }
+
+  }
+  else if(loc>=size)
+  {
+    tail.previous.next=tail.next;
+    tail=tail.previous;
+    // tail=tail.previous;
+    // tail.next=null;
+    size=size-1;
   }
 
-  public void insertNode(int position, int nodeValue) {
-    Node newnode = new Node(nodeValue);
-    if (head == null) {
-      createLinkedList(nodeValue);
+
+}
+
+public void searchNode(int value)
+{
+  if(head==null)
+  {
+    System.out.println("Linked list is empty");
+    return;
+  }
+  else{
+    NodeD tempNode=head;
+  for(int i=1;i<=size;i++)
+  { 
+    if(tempNode.value==value)
+    {
+      System.out.println("**Node found at location: "+ i);
       return;
-
-    } else if (position == 0 && head != null) {
-      newnode.next = head;
-      head = newnode;
-      size = size + 1;
-    } else if (position > 0 && position < size) {
-      Node tempNode = new Node();
-      tempNode = head;
-      for (int i = 0; i < position - 1; i++) {
-        tempNode = tempNode.next;
-
-      }
-      newnode.next = tempNode.next;
-      tempNode.next = newnode;
-      size = size + 1;
-      return;
-    } else {
-      Node tempNode = new Node();
-      tempNode = head;
-      for (int i = 0; i < size - 1; i++) {
-        tempNode = tempNode.next;
-
-      }
-      tempNode.next = newnode;
-      newnode.next = null;
-      tail = newnode;
-      size = size + 1;
-      return;
-
     }
+    tempNode=tempNode.next;
+
+  }
+  System.out.println("No node with value: "+value+ "is found");
+}
+
+}
+
+public void traverseDLL()
+{
+if(head==null)
+{
+  System.out.println("The linkkeddd list does not exit");
+  return;
+}
+
+  NodeD tempNodeD=head;
+  
+  for(int i=0; i<size; i++)
+  {
+    System.out.print(tempNodeD.value);
+    if (i<size-1)
+    {
+      System.out.print("->");
+    }
+    tempNodeD=tempNodeD.next;
 
   }
 
 }
-
-class Node {
-
-  public Node next;
-  public int value;
-
-  public Node(int value) {
-    this.value = value;
+public void reverseTraversalLL()
+{
+  NodeD tempNode=tail;
+  for(int i=size; i>=1; i--)
+  {
+    System.out.print(tempNode.value);
+    if (i>1)
+    {
+      System.out.print("<-");
+    }
+    tempNode=tempNode.previous;
 
   }
+  
 
-  public Node() {
 
+}
+
+public void createDoublyLL(int value)
+{
+  if (head==null)
+  {
+   NodeD node=new NodeD();
+   node.value=value;
+   node.previous=node;
+   node.next=node;
+  head=node;
+  tail=node;
+  ++size;
+  System.out.println("Sizefn: "+ size);
+  System.out.println("Circular Doubly linked list created");
+  
   }
+  
+  
+
+}
+
+public void insertInDoublyLL(int loc,int value)
+{
+if (head==null)
+{
+  createDoublyLL(value);
+  return;
+}
+else if(loc<size)
+{
+  if(loc==1)
+  {
+NodeD node=new NodeD();
+node.value=value;
+node.next=head;
+node.previous=head.previous;
+head.previous=node;
+head=node;
+size++;
+return;
+}
+else{
+  NodeD tempNode=head;
+  for(int i=0; i<loc-1; i++)
+  {
+    tempNode=tempNode.next;
+  }
+  NodeD node = new NodeD();
+  node.value=value;
+tempNode.next.previous=node;
+ node.next=tempNode.next;
+ tempNode.next=node;
+ node.previous=tempNode;
+  size++;
+  return;
+
+} 
+}
+
+else if(loc>=size)
+{
+  NodeD node=new NodeD();
+  node.value=value;
+  tail.next=node;
+  node.previous=tail;
+  node.next=head;
+  tail=node;
+  size++;
+  //System.out.println("Size: "+ size);
+  return;
+} 
+
+}
+
+
+
+}
+
+class NodeD{
+  NodeD previous;
+  NodeD next;
+   int value;
+ 
 
 }
