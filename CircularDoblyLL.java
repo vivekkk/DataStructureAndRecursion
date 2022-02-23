@@ -33,9 +33,6 @@ public class Trial {
     System.out.println("\n");
     System.out.println("Head had previous element " + dl.head.previous.value);
     System.out.println("tail has previous element " + dl.tail.next.value);
-    Questions q= new Questions();
-    q.deleteDuplicates(dl);
-    dl.traverseDLL();
 
   }
 
@@ -45,22 +42,27 @@ class Questions {
   public void deleteDuplicates(CircDoublyLL ll) {
     HashSet<Integer> hash = new HashSet<>();
     NodeD currentNode = ll.head;
-    NodeD previousNode=null;
-    System.out.println("currentNode.value " +currentNode.value);
+    // NodeD prevNode=ll.head.previous;
+    System.out.println("1-" + ll.head.value);
+    System.out.println("1-" + ll.head.previous.value);
+    System.out.println("2-" + ll.head.next.value);
+    System.out.println("3-" + ll.head.next.next.value);
+    // System.out.println("4-"+ head1.next.next.next.value);
     // System.out.println("1"+ head1.value);
-    for (int i = 0; i < ll.size ; i++) {
-      // if (hash.contains(currentNode.value))
-      // { previousNode.next=currentNode.next;
-      //  currentNode.next.previous=previousNode;
+    // System.out.println("1"+ head1.value);
+    for (int i = 0; i < ll.size; i++) {
+      if (hash.contains(currentNode.value))
+        ;
+      {
+        // currentNode.next.previous=prevNode;
+        // prevNode.next=currentNode.next;
       }
-      // hash.add(currentNode.value);
-      // currentNode=currentNode.next;
-      // previousNode=currentNode.previous;
-      // System.out.println("currentNode.value " +currentNode.value);
-      // System.out.println("previousNode.next " +previousNode.value);
+      hash.add(currentNode.value);
+      // prevNode=currentNode;
+      currentNode = currentNode.next;
     }
   }
-
+}
 
 class CircDoublyLL {
   int size;
@@ -86,19 +88,20 @@ class CircDoublyLL {
   }
 
   public void deleteNode(int loc) {
-    if (size == 1) {
-      head = null;
-      tail = null;
+    if(size==1)
+    {
+      head=null;
+      tail=null;
 
     }
     if (head == null) {
       System.out.println("LinkedList is empty no node cannot be deleted");
       return;
-    } else if (loc < size) {
+    } else if (loc < size ) {
       if (loc == 1) {
         head.next.previous = head.previous;
         head = head.next;
-        tail.next = head;
+        tail.next=head;
         // head=head.next;
         // head.previous=null;
         size = size - 1;
@@ -113,10 +116,10 @@ class CircDoublyLL {
 
       }
 
-    } else if (loc >= size && size > 1) {
+    } else if (loc >= size && size>1) {
       tail.previous.next = tail.next;
       tail = tail.previous;
-      head.previous = tail;
+      head.previous=tail;
       // tail=tail.previous;
       // tail.next=null;
       size = size - 1;
