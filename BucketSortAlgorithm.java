@@ -26,7 +26,7 @@ class BucketSortAlgorithm {
         // fitting each element in the bucket
         for (int i = 0; i < len; i++) {
             int toBeassignedBucket = (int) Math.ceil((float) a[i] * numberOfbuckets / (float) maxValue);
-            System.out.print("To be assigned bucket= " + toBeassignedBucket);
+           //System.out.print("To be assigned bucket= " + toBeassignedBucket);
 
             buckets[toBeassignedBucket - 1].add(a[i]);
         }
