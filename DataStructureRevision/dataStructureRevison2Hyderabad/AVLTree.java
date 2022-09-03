@@ -50,7 +50,10 @@ public class AVLTree {
     }
 
     public int getBalance(TreeNode node) {
-        int bal = gethight(root.left) - gethight(root.right);
+        if (node == null) {
+            return 0;
+        }
+        int bal = gethight(node.left) - gethight(node.right);
         return bal;
     }
 
@@ -112,7 +115,7 @@ public class AVLTree {
         if (node == null) {
             return;
         } else {
-           System.out.print(node.value+ "->");
+            System.out.print(node.value + "->");
             preorderTraversal(node.left);
             preorderTraversal(node.right);
         }
@@ -144,23 +147,100 @@ public class AVLTree {
     }
 
     public void levelOrderTraversal(TreeNode node) {
-           Queue<TreeNode> q=new LinkedList<TreeNode>();
-           q.add(node);
-           while(!q.isEmpty())
-           {
-            TreeNode t=q.remove();
-            System.out.println(t.value);
-            if(t.left !=null)
-            {
+        Queue<TreeNode> q = new LinkedList<TreeNode>();
+        q.add(node);
+        while (!q.isEmpty()) {
+            TreeNode t = q.remove();
+            System.out.print(t.value + " ->");
+            if (t.left != null) {
                 q.add(t.left);
             }
-            if(t.right !=null)
-            {
+            if (t.right != null) {
                 q.add(t.right);
             }
-            
-           }
 
+        }
+
+    }
+
+    public TreeNode searchNode(int value) {
+
+        return searchNodeAVLTree(root, value);
+
+    }
+
+    public TreeNode searchNodeAVLTree(TreeNode root, int value) {
+        if (root.value == value) {
+            return root;
+        } else if (root.value > value) {
+            return searchNodeAVLTree(root.left, value);
+
+        } else if (root.value < value) {
+            return searchNodeAVLTree(root.right, value);
+
+        } else
+            return null;
+
+    }
+
+    public TreeNode deleteNodeAVLTree(TreeNode node, int value) {
+        if (node == null) {
+
+            System.out.println("Node could not be found in the tree");
+            return node;
+
+        } else {
+            if (value > node.value || value < node.value) {
+                if (value > node.value) {
+                    node.right = deleteNodeAVLTree(node.right, value);
+                } else
+                    node.left = deleteNodeAVLTree(node.left, value);
+            }
+
+            else {
+                if (node.left != null && node.right != null) {
+                    TreeNode tempNode = getMinimumNodeFromRightSubtree(node.right);
+                    node.value = tempNode.value;
+                    node.right = deleteNodeAVLTree(node.right, tempNode.value);
+                } else if (node.left != null) {
+                    node = node.left;
+                } else if (node.right != null) {
+                    node = node.right;
+                } else {
+                    node = null;
+                }
+
+            }
+            int balance = getBalance(node);
+
+            if (balance > 1 && node.left.value > value) {
+                return leftLeftCondition(node);
+            }
+            if (balance > 1 && node.left.value < value) {
+                return leftRightConditiono(node);
+            }
+            if (balance < -1 && node.right.value < value) {
+                return rightRightCondition(node);
+            }
+            if (balance < -1 && node.right.value > value) {
+                return rightLeftCondition(node);
+            }
+
+        }
+        return node;
+
+    }
+
+    public TreeNode deleNode(int value) {
+        return deleteNodeAVLTree(root, value);
+    }
+
+    public TreeNode getMinimumNodeFromRightSubtree(TreeNode node) {
+        if (node.left == null) {
+            return node;
+        } else {
+            return getMinimumNodeFromRightSubtree(node.left);
+        }
 
     }
 
@@ -172,7 +252,14 @@ public class AVLTree {
         tree.insert(50);
         tree.insert(5);
         tree.insert(88);
+        tree.insert(98);
+        tree.insert(78);
         tree.levelOrderTraversal(tree.root);
+        tree.deleNode(88);
+        System.out.println("----------------");
+        tree.levelOrderTraversal(tree.root);
+
+        // System.out.println(tree.searchNode(5).value);
 
     }
 }
